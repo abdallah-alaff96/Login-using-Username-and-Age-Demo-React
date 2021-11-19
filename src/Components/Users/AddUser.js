@@ -15,10 +15,11 @@ const AddUser = (props) => {
   };
   const submitHandler = (event) => {
     event.preventDefault();
-    if (enteredAge <= 0)
-      return console.log("Please, Age must be greater than 0");
-    if (enteredUserName.trim().length === 0)
+    if (enteredUserName.trim().length === 0 || enteredAge.trim().length === 0)
       return console.log("There is no correct userName");
+    // "+" is to convert to number, because useState('') will convert it to string
+    if (+enteredAge < 1)
+      return console.log("Please, Age must be greater than 0");
 
     const userData = {
       userName: enteredUserName,
