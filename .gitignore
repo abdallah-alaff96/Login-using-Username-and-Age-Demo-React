@@ -1,0 +1,2 @@
+# to ignore files or js scripts or anything i don't want to be uploaded to github (only by writing its name)
+node_modules
