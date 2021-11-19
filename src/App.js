@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AddUser from "./Components/Users/AddUser";
+import UsersList from "./Components/Users/UsersList";
 
 function App() {
   const UsersDataBaseArr = [];
@@ -10,10 +11,11 @@ function App() {
       return [userData, ...prevDataBaseUpdate];
     });
   };
-  console.log(usersInfo);
+
   return (
     <div>
       <AddUser onSaveEnteredData={saveEnteredDataHandler} />
+      <UsersList items={usersInfo}></UsersList>
     </div>
   );
 }
