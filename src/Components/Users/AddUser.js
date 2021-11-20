@@ -7,6 +7,7 @@ import ErrorModal from "../UI/ErrorModal";
 const AddUser = (props) => {
   const [enteredUserName, setUserName] = useState("");
   const [enteredAge, setAge] = useState("");
+  const [error, setError] = useState();
 
   const userNameChangeHandler = (event) => {
     setUserName(event.target.value);
@@ -16,11 +17,21 @@ const AddUser = (props) => {
   };
   const submitHandler = (event) => {
     event.preventDefault();
-    if (enteredUserName.trim().length === 0 || enteredAge.trim().length === 0)
-      return console.log("There is no correct userName");
+    if (enteredUserName.trim().length === 0 || enteredAge.trim().length === 0) {
+      setError({
+        title: "Invalid inputs",
+        message: "Please, Enter a valid name and age (non empty inputs).",
+      });
+      return;
+    }
     // "+" is to convert to number, because useState('') will convert it to string
-    if (+enteredAge < 1)
-      return console.log("Please, Age must be greater than 0");
+    if (+enteredAge < 1) {
+      setError({
+        title: "Invalid age",
+        message: "Please, Enter a valid age (> 0).",
+      });
+      return;
+    }
 
     const userData = {
       userName: enteredUserName,
@@ -32,9 +43,19 @@ const AddUser = (props) => {
     setAge("");
   };
 
+  const errorHandler = () => {
+    setError(null);
+  };
+
   return (
     <div>
-      <ErrorModal title="An error accured" message="Somthing went wrong!" />
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onConfirm={errorHandler}
+        />
+      )}
       <Card className={classes.input}>
         <form onSubmit={submitHandler}>
           <label htmlFor="username">Username</label>
